@@ -6,7 +6,7 @@ ENV TZ=Etc/UTC
 ADD . ./workdir
 WORKDIR "/workdir"
 
-RUN ls
+RUN ls -la
 
 # Create output folder
 RUN mkdir -p output
