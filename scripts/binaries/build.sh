@@ -6,7 +6,7 @@ ARCH="${ARCH:-x86_64}"
 
 IMAGE="${DISTRO}.Dockerfile"
 DOCKER_FILE="./scripts/binaries/$ARCH/$IMAGE"
-DOCKER_IGNORE_FILE="./scripts/binaries/$ARCH/${IMAGE}.dockerignore"
+DOCKER_IGNORE_FILE="./scripts/binaries/$ARCH/shared.dockerignore"
 
 if ! test -f "$DOCKER_FILE"; then
     echo "Unknown option"
