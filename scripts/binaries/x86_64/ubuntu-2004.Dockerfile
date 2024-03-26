@@ -13,11 +13,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust_install.sh 
 ADD . ./workdir
 WORKDIR "/workdir"
 
-# This installs the right toolchain
-RUN $HOME/.cargo/bin/rustup show
-
-# This builds the binary.
-RUN $HOME/.cargo/bin/cargo build --locked --release
+RUN ls
 
 # Create output folder
 RUN mkdir -p output

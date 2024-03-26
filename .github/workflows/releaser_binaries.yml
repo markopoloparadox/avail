@@ -19,6 +19,9 @@ jobs:
 
       - name: install podman
         run: sudo apt-get update && sudo apt install podman -y
+
+      - name: ls
+        run: ls
         
       - name: build docker image and build avail binary
         run: ENGINE=podman DISTRO=ubuntu-2004 ZIP=1 ./scripts/binaries/build.sh
@@ -40,7 +43,7 @@ jobs:
         with:
           name: x86_64-ubuntu-2004-avail-node.tar.gz
           path: ./artifact
-          
+
       - name: Prepare
         id: prepare
         run: |
