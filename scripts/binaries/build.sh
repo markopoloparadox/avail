@@ -6,6 +6,7 @@ ARCH="${ARCH:-x86_64}"
 
 IMAGE="${DISTRO}.Dockerfile"
 DOCKER_FILE="./scripts/binaries/$ARCH/$IMAGE"
+DOCKER_IGNORE_FILE="./scripts/binaries/$ARCH/${IMAGE}.dockerignore"
 
 if ! test -f "$DOCKER_FILE"; then
     echo "Unknown option"
@@ -21,7 +22,7 @@ echo "Selected arch: $ARCH"
 echo "Selected docker file: $DOCKER_FILE"
 
 # Build the image
-"$ENGINE" build -t availnodet -f $DOCKER_FILE .
+"$ENGINE" build -t availnodet -f $DOCKER_FILE --ignore-path=$DOCKER_IGNORE_FILE .
 
 mkdir -p "output/$ARCH/$DISTRO"
 
@@ -35,7 +36,7 @@ fi
 
 if  [[ "$ZIP" ]]; then
     mkdir -p ./output/zips/
-
+    
     cd ./output/$ARCH/$DISTRO
     tar -czf ./../../../output/zips/${ARCH}-${DISTRO}-avail-node.tar.gz avail-node
 fi
