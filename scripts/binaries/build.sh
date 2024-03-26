@@ -22,7 +22,7 @@ echo "Selected arch: $ARCH"
 echo "Selected docker file: $DOCKER_FILE"
 
 # Build the image
-"$ENGINE" build -t availnodet -f $DOCKER_FILE --ignore-path=$DOCKER_IGNORE_FILE .
+"$ENGINE" build -t availnodet --ignorefile=$DOCKER_IGNORE_FILE -f $DOCKER_FILE .
 
 mkdir -p "output/$ARCH/$DISTRO"
 
