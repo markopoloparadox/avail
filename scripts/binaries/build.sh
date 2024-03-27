@@ -36,7 +36,7 @@ fi
 
 if  [[ "$ZIP" ]]; then
     mkdir -p ./output/zips/
-    
+
     cd ./output/$ARCH/$DISTRO
     tar -czf ./../../../output/zips/${ARCH}-${DISTRO}-avail-node.tar.gz avail-node
 fi
