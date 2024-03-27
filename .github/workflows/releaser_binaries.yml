@@ -42,7 +42,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /output/da_runtime.compact.compressed.wasm
+          file: output/da_runtime.compact.compressed.wasm
           release_name: ${{ steps.prepare.outputs.tag_name }}
           tag: ${{ steps.prepare.outputs.tag_name }}
           overwrite: true
@@ -82,7 +82,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /output/zips/x86_64-ubuntu-2004-avail-node.tar.gz
+          file: output/zips/x86_64-ubuntu-2004-avail-node.tar.gz
           release_name: ${{ steps.prepare.outputs.tag_name }}
           tag: ${{ steps.prepare.outputs.tag_name }}
           overwrite: true
