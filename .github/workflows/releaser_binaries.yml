@@ -33,10 +33,10 @@ jobs:
           command: ENGINE=podman SCRIPT_LOC=./scripts/workflows/releaser_wasm.sh ./scripts/workflows/run.sh
 
       - name: Prepare
-          id: prepare
-          run: |
-              TAG=${GITHUB_REF#refs/tags/}
-              echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
+        id: prepare
+        run: |
+            TAG=${GITHUB_REF#refs/tags/}
+            echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
 
       - name: publish binaries
         uses: svenstaro/upload-release-action@v2
@@ -73,10 +73,10 @@ jobs:
           command: ENGINE=podman DISTRO=ubuntu-2004 ZIP=1 ./scripts/binaries/build.sh
 
       - name: Prepare
-          id: prepare
-          run: |
-              TAG=${GITHUB_REF#refs/tags/}
-              echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
+        id: prepare
+        run: |
+            TAG=${GITHUB_REF#refs/tags/}
+            echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
 
       - name: publish binaries
         uses: svenstaro/upload-release-action@v2
