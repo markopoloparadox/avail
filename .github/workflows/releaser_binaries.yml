@@ -8,8 +8,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  wasm:
+  build_binaries:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - distro: ubuntu-2004
+            output_file: output/zips/x86_64-ubuntu-2004-avail-node.tar.gz
     steps:
       - uses: actions/checkout@v2
 
@@ -30,7 +35,7 @@ jobs:
         with:
           timeout_minutes: 60
           max_attempts: 3
-          command: ENGINE=podman SCRIPT_LOC=./scripts/workflows/releaser_wasm.sh ./scripts/workflows/run.sh
+          command: ENGINE=podman DISTRO=${{ matrix.distro }} ZIP=1 ./scripts/binaries/build.sh
 
       - name: Prepare
         id: prepare
@@ -38,52 +43,11 @@ jobs:
             TAG=${GITHUB_REF#refs/tags/}
             echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
 
-      - name: publish binaries
+      - name: publish binary
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: output/da_runtime.compact.compressed.wasm
+          file: ${{ matrix.output_file }}
           release_name: ${{ steps.prepare.outputs.tag_name }}
           tag: ${{ steps.prepare.outputs.tag_name }}
           overwrite: true
-          file_glob: true
-
-  wasm2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
-        with:
-          version: '3.x'
-      
-      - name: install podman
-        run: sudo apt-get update && sudo apt install podman -y
-
-      - uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 60
-          max_attempts: 3
-          command: ENGINE=podman DISTRO=ubuntu-2004 ZIP=1 ./scripts/binaries/build.sh
-
-      - name: Prepare
-        id: prepare
-        run: |
-            TAG=${GITHUB_REF#refs/tags/}
-            echo "tag_name=${TAG}" >> $GITHUB_OUTPUT
-
-      - name: publish binaries
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: output/zips/x86_64-ubuntu-2004-avail-node.tar.gz
-          release_name: ${{ steps.prepare.outputs.tag_name }}
-          tag: ${{ steps.prepare.outputs.tag_name }}
-          overwrite: true
-          file_glob: true
