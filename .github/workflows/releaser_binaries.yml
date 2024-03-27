@@ -28,6 +28,7 @@ jobs:
 
       - uses: nick-fields/retry@v3
         with:
+          timeout_minutes: 60
           max_attempts: 3
           command: ENGINE=podman SCRIPT_LOC=./scripts/workflows/releaser_wasm.sh ./scripts/workflows/run.sh
 
@@ -67,6 +68,7 @@ jobs:
 
       - uses: nick-fields/retry@v3
         with:
+          timeout_minutes: 60
           max_attempts: 3
           command: ENGINE=podman DISTRO=ubuntu-2004 ZIP=1 ./scripts/binaries/build.sh
 
